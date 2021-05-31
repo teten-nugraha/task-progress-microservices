@@ -27,4 +27,10 @@ public interface TaskRepository extends JpaRepository<Task, String> {
             value = "select * from tb_task "
     )
     List<Task> getAllTasks();
+
+    @Query(
+            nativeQuery = true,
+            value = "select * from tb_task where nama = ?1"
+    )
+    Task findByNama(String nama);
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -21,6 +22,7 @@ public class TaskServiceImpl implements TaskService {
     @Autowired
     private TaskRepository taskRepository;
 
+    @Qualifier("analytic-service")
     @Autowired
     private FeignAnalyticService feignAnalyticService;
 
@@ -49,12 +51,12 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Task saveOrUpdateTask(Task task) {
         log.info("Access TaskService : saveOrUpdateTask()");
-        Optional<Task> taskdb = taskRepository.findById(task.getId());
-        if(taskdb.isPresent()) {
-            taskdb.get().setFinished(task.isFinished());
-            TaskDto dto =  createDto(taskdb.get());
-            sendToAnalyticSrv(taskdb.get(), dto);
-            return taskRepository.save(taskdb.get());
+        Task taskdb = taskRepository.findByNama(task.getNama());
+        if(Objects.nonNull(taskdb)) {
+            taskdb.setFinished(task.isFinished());
+            TaskDto dto =  createDto(taskdb);
+            sendToAnalyticSrv(taskdb, dto);
+            return taskRepository.save(taskdb);
 
         }else{
             task.setCreatedDate(LocalDate.now());
