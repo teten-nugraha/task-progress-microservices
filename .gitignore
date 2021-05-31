@@ -37,3 +37,15 @@ eureka-service/*.iws
 eureka-service/*.iml
 eureka-service/*.ipr
 
+category-service/HELP.md
+category-service/target/
+category-service/!.mvn/wrapper/maven-wrapper.jar
+category-service/!**/src/main/**/target/
+category-service/!**/src/test/**/target/
+
+### IntelliJ IDEA ###
+category-service/.idea
+category-service/*.iws
+category-service/*.iml
+category-service/*.ipr
+
